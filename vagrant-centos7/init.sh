@@ -4,12 +4,12 @@ export OO_HOME="$HOME/OneOps"
 export VGRT_HOME="$PWD"
 
 export PUB_GH="https://github.com"
-export WMT_GH="https://gecgithub01.walmart.com/"
+export WMT_GH="https://gecgithub01.walmart.com"
 
 export PUB_GH_ORIGIN="$PUB_GH/hrodz13"
 export PUB_GH_UPSTREAM="$PUB_GH/oneops"
 
-export WMT_GH_ORIGIN="WMT_GH/CP-PlatformServices"
+export WMT_GH_ORIGIN="$WMT_GH/CP-PlatformServices"
 export WMT_GH_UPSTREAM="$WMT_GH/walmartlabs"
 
 git_clone () {
