@@ -1,7 +1,6 @@
 Vagrant.configure(2) do |config|
-  # hostnames = ["oomaster"]
-  hostnames = ["oomaster", "oodev"]  # uncomment for multi-machines
-
+  hostnames = ["oomaster"]
+  # hostnames = ["oomaster", "oodev"]
 
   hostnames.each do |hostname|
     config.vm.define "#{hostname}" do |subconfig|
