@@ -4,13 +4,8 @@ export OO_HOME="$HOME/OneOps"
 export VGRT_HOME="$PWD"
 
 export PUB_GH="https://github.com"
-export WMT_GH="https://gecgithub01.walmart.com"
-
 export PUB_GH_ORIGIN="$PUB_GH/hrodz13"
 export PUB_GH_UPSTREAM="$PUB_GH/oneops"
-
-export WMT_GH_ORIGIN="$WMT_GH/CP-PlatformServices"
-export WMT_GH_UPSTREAM="$WMT_GH/walmartlabs"
 
 git_clone () {
     # $1 => directory
@@ -69,21 +64,11 @@ pause () {
     read "?$*"
 }
 
-for hostname in "oomaster"
+for hostname in "oodev"
 # for hostname in "oomaster" "oodev"
 do
     make_directory "$OO_HOME"
     make_directory "$OO_HOME/$hostname"
-
-    pause "Make sure you are able to connect to $WMT_GH. Press [ENTER] to continue... "
-
-    git_clone "$OO_HOME/$hostname" "$WMT_GH_ORIGIN" "circuit-main-1"
-    git_add_remote "$OO_HOME/$hostname" "$WMT_GH_UPSTREAM" "circuit-main-1" "upstream"
-    git_verify "$OO_HOME/$hostname/circuit-main-1"
-
-    git_clone "$OO_HOME/$hostname" "$WMT_GH_ORIGIN" "circuit-walmartlabs-1"
-    git_add_remote "$OO_HOME/$hostname" "$WMT_GH_UPSTREAM" "circuit-walmartlabs-1" "upstream"
-    git_verify "$OO_HOME/$hostname/circuit-walmartlabs-1"
 
     pause "Make sure you are able to connect to $PUB_GH. Press [ENTER] to continue... "
 
