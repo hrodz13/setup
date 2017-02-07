@@ -69,7 +69,8 @@ pause () {
     read "?$*"
 }
 
-for hostname in "oomaster" # "oodev"
+# for hostname in "oomaster"
+for hostname in "oomaster" "oodev"
 do
     make_directory "$OO_HOME"
     make_directory "$OO_HOME/$hostname"
