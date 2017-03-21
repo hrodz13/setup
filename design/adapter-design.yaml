@@ -189,7 +189,7 @@ platforms:
 
             should_expand: 'true'
             checksum: ''
-            location: $OO_LOCAL{distbase}/oneops-cms-admin--$OO_LOCAL{cms-admin-version}.tar.gz
+            location: $OO_LOCAL{distbase}/oneops-cms-admin-$OO_LOCAL{cms-admin-version}.tar.gz
             repository: '*Using full RepoURL*'
             version: $OO_LOCAL{version}
             url: $OO_LOCAL{distbase}/oneops-cms-admin-$OO_LOCAL{cms-admin-version}.tar.gz
