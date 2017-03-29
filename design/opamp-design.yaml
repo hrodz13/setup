@@ -140,7 +140,7 @@ platforms:
              SEARCH_AMQ_HOST: $OO_LOCAL{search-amq-host}
              OPAMP_ANTENNA_RETRY_DIR: $OO_LOCAL{antenna-retry-dir}
              OPAMP_SEARCH_RETRY_DIR: $OO_LOCAL{search-retry-dir}
-             TRANSISTOR_HOST: http://transitor.$OO_LOCAL{domain-alias}
+             TRANSISTOR_HOST: http://transistor.$OO_LOCAL{domain}
            port: '8080'
            mem_max: 4096m
            server_port: '8005'
