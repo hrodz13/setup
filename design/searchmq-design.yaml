@@ -33,7 +33,7 @@ platforms:
             max_connections: 1000
       database/oneops.1.Database:
         database:
-          password:$OO_LOCAL{dbpass}
+          password: $OO_LOCAL{dbpass}
           dbname: $OO_LOCAL{searchmqdb}
           username: $OO_LOCAL{dbuser}
 
