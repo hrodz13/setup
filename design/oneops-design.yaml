@@ -35,7 +35,7 @@ variables:
   DOMAIN-ALIAS: '**changeme**'
   TOMCAT-ACCESS-LOG-FORMAT: '%h %{X-Cms-User}i %{X-Cms-Scope}i %{NSC-Client-IP}i %l%u %t &quot;%r&quot; %s %b %D %F'
   CMS-DB-DES-KEY: '::ENCRYPTED::'
-  TOMCATHEAPDUMPPATH: /mnt/cms_heapdump.hprof
+  TOMCATHEAPDUMPPATH: /log/tomcat/cms_heapdump.hprof
   ECV-USER: 'oneopsecv'
   CMS-DB-USER: 'oneopscms'
   CMS-DES-FILE-LOCATION: /usr/local/oneops/certs/oo.key

@@ -107,15 +107,15 @@ platforms:
           as_user: root
           restart: |
               execute "cp /opt/oneops/artifact/releases/$OO_GLOBAL{VERSION}/oneops/dist/daq-collector-1.0.0.jar /opt/oneops/artifact/releases/$OO_GLOBAL{VERSION}/oneops/dist/daq-1.0.0.jar"
+              execute "cd /opt/oneops; jar xf /opt/oneops/artifact/releases/$OO_GLOBAL{VERSION}/oneops/dist/daq-1.0.0.jar logstash-custom-output-plugin.rb"
 
-               service "logstash" do
+              service "logstash" do
                   action [:enable,:restart]
                   only_if { File.exists?('/etc/init.d/logstash') }
-               end
+              end
 
               execute "chmod a+rx /etc/init.d/cassandra"
-              execute "cd /opt/oneops; jar xf /opt/oneops/artifact/releases/$OO_GLOBAL{VERSION}/oneops/dist/daq-1.0.0.jar logstash-custom-output-plugin.rb"
-               #End of restart
+              #End of restart
           should_expand: 'true'
           checksum: ''
           location: $OO_LOCAL{distbase}/oneops-daq-$OO_LOCAL{version}.tar.gz
@@ -145,7 +145,7 @@ platforms:
       logstash/oneops.1.Logstash:
         logstash:
           outputs:
-           - if "drop" not in [tags] {     oneopsdaq {codec => json cluster_host_port => "daqdb:9160"  }   }   if "metric" in [tags] { file {   message_format => "%{events.rate_1m}"  path=> "/var/run/logstash_metric"         }    }
+           - if "drop" not in [tags] {     oneopsdaq {codec => json cluster_host_port => "daqdb:9160"  }   }   
 
           inputs:
            - 'lumberjack {     port => 4000 ssl_certificate => "/opt/.certs/logstash.crt"     ssl_key => "/opt/.certs/logstash.key"   } '
@@ -168,6 +168,7 @@ platforms:
                   export UOPTS="$UOPTS -Doo.cassandra.client.active_clients=128"
                   export UOPTS="$UOPTS -Doo.cassandra.client.timeout=5000"
                   export UOPTS="$UOPTS -Doo.cassandra.client.auto_discovery=true"
+                  export UOPTS="$UOPTS -Dqueuesize=75000"
                   export LS_HEAP_SIZE=1000m
                   export LS_JAVA_OPTS="$UOPTS"
                   export LS_WORKER_THREADS=100
@@ -447,3 +448,8 @@ platforms:
           home_directory: /home/ooadmin
           ulimit: '16384'
           username: ooadmin
+      volume/oneops.1.Volume:
+        volume-log:
+          size: 100%FREE
+          mount_point: /log
+          fstype: ext4

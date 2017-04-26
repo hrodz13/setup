@@ -272,6 +272,11 @@ platforms:
           home_directory: '/home/ooadmin'
           ulimit: '16384'
           username: ooadmin
+      volume/oneops.1.Volume:
+        volume-log:
+          size: 100%FREE
+          mount_point: /log
+          fstype: ext4
       lb/oneops.1.Lb:
         lb:
          listeners:

@@ -10,7 +10,9 @@ platforms:
         - cmsdb
       variables:
         deploycontext: adapter
+        admindeploycontext: cms-admin
         version: $OO_GLOBAL{VERSION}
+        cms-admin-version: $OO_GLOBAL{VERSION}
         notifypass: '::ENCRYPTED::'
         ecv-user: $OO_GLOBAL{ECV-USER}
         ecv-secret: $OO_GLOBAL{ECV-SECRET}
@@ -150,6 +152,48 @@ platforms:
            - cmsapi
 
         artifact/oneops.1.Artifact:
+          cms-admin:
+            install_dir: /opt/oneops/artifact
+            password: '::ENCRYPTED::'
+            restart: |
+                  node.set["oneops"] = {
+                              :home => "/usr/local/oneops",
+                              :install_dir => "/usr/local/oneops"
+                            }
+                            node.set["tomcat"] = {
+                              :webapp_dir => "/opt/tomcat7/webapps"
+                            }
+                            tomcat_user = "tomcat"
+
+                            execute "rm -f /usr/local/oneops/dist"
+
+                            link "/usr/local/oneops/dist" do
+                              to "/opt/oneops/artifact/releases/$OO_LOCAL{version}/oneops/dist"
+                            end
+
+                            # war cleanup and deploy
+                            ["$OO_LOCAL{admindeploycontext}"].each do |war|
+
+                              execute "#{war} war clean" do
+                                 command "rm -fr #{node[:tomcat][:webapp_dir]}/#{war}*"
+                              end
+                              execute "#{war} war deploy" do
+                                 command "cp #{node[:oneops][:home]}/dist/#{war}*.war #{node[:tomcat][:webapp_dir]}"
+                              end
+                           end
+
+                            service "tomcat7" do
+                              action :restart
+                            end
+                  #End of restart
+
+            should_expand: 'true'
+            checksum: ''
+            location: $OO_LOCAL{distbase}/oneops-cms-admin-$OO_LOCAL{cms-admin-version}.tar.gz
+            repository: '*Using full RepoURL*'
+            version: $OO_LOCAL{version}
+            url: $OO_LOCAL{distbase}/oneops-cms-admin-$OO_LOCAL{cms-admin-version}.tar.gz
+            username: not_required
           app:
             install_dir: /opt/oneops/artifact
             password: '::ENCRYPTED::'
@@ -193,6 +237,8 @@ platforms:
             version: $OO_LOCAL{version}
             url: $OO_LOCAL{distbase}/oneops-adapter-$OO_LOCAL{version}.tar.gz
             username: not_required
+            depends:
+                  - cms-admin
             attachments:
               disableECV:
                 headers: ''
@@ -269,3 +315,8 @@ platforms:
             home_directory: /home/ooadmin
             ulimit: '16384'
             username: ooadmin
+        volume/oneops.1.Volume:
+          volume-log:
+            size: 100%FREE
+            mount_point: /log
+            fstype: ext4

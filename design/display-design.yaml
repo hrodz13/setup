@@ -139,13 +139,13 @@ platforms:
 
       asset-url:
 
-      feedback-url:
-      help-url:
-      news-url:
+      feedback-url: http://oneops.com
+      help-url: http://oneops.com/user
+      news-url: http://oneops.com/general/blog
       privacy-policy-url:
-      report-problem-url:
-      support-chat-url:
-      terms-of-service-url: http://www.oneops.com/legal/terms
+      report-problem-url: https://github.com/oneops/OneOps/issues
+      support-chat-url: http://oneops.slack.com
+      terms-of-service-url:
 
       session-inactivity-timeout: '30'
 
